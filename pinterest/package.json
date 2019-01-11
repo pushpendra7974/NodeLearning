@@ -1,0 +1,28 @@
+{
+  "name": "pinterest",
+  "version": "1.0.0",
+  "description": "This is a sample application in node.js which is a clone of pinterest",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pushpendra7974/NodeLearning.git"
+  },
+  "author": "Pushpendra Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pushpendra7974/NodeLearning/issues"
+  },
+  "homepage": "https://github.com/pushpendra7974/NodeLearning#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "ejs-mate": "^3.0.0",
+    "express": "^4.16.4",
+    "express-fileupload": "^1.1.1-alpha.1",
+    "mongoose": "^5.4.3",
+    "morgan": "^1.9.1"
+  }
+}
