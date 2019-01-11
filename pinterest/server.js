@@ -28,7 +28,7 @@ var app = express();
  *  dburl: contains the database connection string including username and password.
  */
 
-var dburl ='mongodb://<username>:<userpassword>@ds153814.mlab.com:53814/pinterest';
+var dburl ='mongodb://root:root123@ds153814.mlab.com:53814/pinterest';
 mongoose.connect(dburl,{useNewUrlParser: true},function(err){
     if(err){
         console.log('Error while connecting to database '+err);
@@ -38,12 +38,22 @@ mongoose.connect(dburl,{useNewUrlParser: true},function(err){
 })
 // Database connectivity ends here
 
-// Routing Methods Start from here
+// Middleware starts from here
 
-    app.get('/',function(req,res,next){
-        res.json('Hello from the home page of this application!');
-    })
-// Routing Method Ends Here
+app.use(fileUpload());
+app.use(express.static(__dirname + '/public'));
+app.engine('ejs',engine);
+app.set('view engine','ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended:true
+}));
+app.use(morgan('dev'));
+
+require('./routes/main')(app);
+
+// Middleware ends here
+
 
 // Function to make your server listen at port no. 8090
 app.listen(8090,function(err){
