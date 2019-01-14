@@ -51,6 +51,7 @@ app.use(bodyParser.urlencoded({
 app.use(morgan('dev'));
 
 require('./routes/main')(app);
+require('./routes/pins')(app);
 
 // Middleware ends here
 
