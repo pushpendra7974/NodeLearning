@@ -43,4 +43,11 @@ module.exports = function(app){
             res.render('pins/index',{pins:pins});
         });
     })
+
+    app.get('/pins/delete/:id',function(req,res,next){
+        Pin.find({_id: req.params.id}).remove()
+        .exec(function(err,foundPin){
+            res.redirect('/pins/index');
+        })
+    })
 }
