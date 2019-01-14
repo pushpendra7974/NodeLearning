@@ -50,4 +50,11 @@ module.exports = function(app){
             res.redirect('/pins/index');
         })
     })
+
+    app.get('/pins/details/:id',function(req,res,next){
+        Pin.findOne({_id: req.params.id})
+        .exec(function(err,foundPin){
+            res.render('pins/details',{pin:foundPin});
+        })
+    })
 }
