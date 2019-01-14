@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
-var schema = mongoose.schema;
+var Schema = mongoose.Schema;
 
-var PinSchema = new schema({
+var PinSchema = new Schema({
     title : String,
     desc : String,
     username : String,

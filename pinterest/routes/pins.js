@@ -1,7 +1,46 @@
+var path = require('path');
+var Pin = require('../models/pin');
 
 module.exports = function(app){
     app.route('/pins/create')
     .get(function(req,res,next){
         res.render('pins/create');
+    })
+    .post(function(req,res,next){
+        var pin = new Pin();
+        pin.title=req.body.title;
+        pin.desc = req.body.desc;
+        pin.username = req.body.username;
+        pin.isSave = false;
+
+        if(!req.files)
+            return JSON('error');
+
+        let sampleFile = req.files.sampleFile;
+        let fileName = Math.random().toString(26).slice(2)+".jpg";
+        let path = "./public/Files/"+fileName;
+
+        pin.path = "/Files/"+fileName;
+
+        // Move the file from client machine to server
+        sampleFile.mv(path,function(err){
+            if(err){
+                return res.status(500).send(err);
+            }
+        });
+
+        //Save the pin to database
+        pin.save(function(err){
+            if(err){
+                throw err;
+            }
+            res.redirect('/pins/index');
+        });
+    })
+
+    app.get('/pins/index',function(req,res,next){
+        Pin.find({},function(err,pins){
+            res.render('pins/index',{pins:pins});
+        });
     })
 }
