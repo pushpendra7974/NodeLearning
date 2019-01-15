@@ -57,4 +57,30 @@ module.exports = function(app){
             res.render('pins/details',{pin:foundPin});
         })
     })
+
+    app.route('/pins/edit/:id')
+    .get(function(req,res,next){
+        Pin.findOne({_id: req.params.id},function(err,foundPin){
+            res.render('pins/edit',{pin:foundPin});            
+        })
+    })
+    .post(function(req,res,next){
+        Pin.findOne({_id: req.params.id},function(err,foundPin){
+            if(foundPin){
+                if(req.body.title){
+                    foundPin.title = req.body.title;
+                }
+                if(req.body.desc){
+                    foundPin.desc = req.body.desc;
+                }
+
+                foundPin.save(function(err){
+                    if(err){
+                        return next(err);
+                    }
+                    res.redirect('/pins/details/'+foundPin._id);
+                })
+            }                        
+        })
+    })
 }

@@ -28,7 +28,7 @@ var app = express();
  *  dburl: contains the database connection string including username and password.
  */
 
-//var dburl ='mongodb://<username>:<userpassword>@ds153814.mlab.com:53814/pinterest';
+var dburl ='mongodb://<username>:<userpassword>@ds153814.mlab.com:53814/pinterest';
 mongoose.connect(dburl,{useNewUrlParser: true},function(err){
     if(err){
         console.log('Error while connecting to database '+err);
