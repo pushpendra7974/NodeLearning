@@ -3,6 +3,12 @@ var Pin = require('../models/pin');
 
 module.exports = function(app){
     
+    app.get('/pins/pin-search',function(req,res,next){
+        Pin.find({"title" :{"$regex":req.query['search'],"$options":"1"}},function(err,foundPins){
+            res.render('pins/index',{pins:foundPins});
+        })
+    })
+
     app.get('/pins/saved-pins',function(req,res,next){
         Pin.find({"isSave" :true},function(err,foundPins){
             res.render('pins/index',{pins:foundPins});
