@@ -50,6 +50,14 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(morgan('dev'));
 
+// Logic to Convert this App to SPA
+app.use(function(req,res,next){
+    res.locals.ajax = req.xhr;
+    res.setHeader('Location',req.url);
+    next();
+});
+// End of logic
+
 require('./routes/main')(app);
 require('./routes/pins')(app);
 
