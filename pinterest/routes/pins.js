@@ -2,6 +2,28 @@ var path = require('path');
 var Pin = require('../models/pin');
 
 module.exports = function(app){
+    
+    app.get('/pins/saved-pins',function(req,res,next){
+        Pin.find({"isSave" :true},function(err,foundPins){
+            res.render('pins/index',{pins:foundPins});
+        })
+    })
+
+    app.get('/pins/pin-save/:id',function(req,res,next){
+        Pin.findOne({_id: req.params.id},function(err,foundPin){
+            if(foundPin){
+                foundPin.isSave = !(foundPin.isSave);
+            }
+
+            foundPin.save(function(err){
+                if(err){
+                    return next(err);
+                }
+            res.redirect('/pins/details/'+foundPin._id);
+            })
+        })
+    })
+    
     app.route('/pins/create')
     .get(function(req,res,next){
         res.render('pins/create');
