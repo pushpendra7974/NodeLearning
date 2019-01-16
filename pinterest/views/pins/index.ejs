@@ -12,7 +12,7 @@
             </h2>
             <p>
               Submitted By : <%=  pins[i].username %>
-              <a class="btn btn-default" href="/pins/delete/<%=  pins[i]._id %>">Delete</a>
+              <a onclick="conf(event)" eval="del($this,data)" class="btn btn-default" href="/pins/delete/<%=  pins[i]._id %>">Delete</a>
             </p>
         </div>
           <% }%>
@@ -20,6 +20,24 @@
   </div>
 
   <script>
+
+    function conf(event){
+      if(confirm('Do you really want to delete this?')==false){
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    }
+
+    function del($this,data){
+      if(data){
+        //$this.closest('.box').remove();
+        $('#pins').masonry('remove',$this.closest('.box'));
+        $('#pins').masonry('layout');
+      }else{
+
+      }
+    }
+
     $(function(){
       return $("#pins").imagesLoaded(function(){
         return $("#pins").masonry({

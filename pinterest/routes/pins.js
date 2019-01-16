@@ -34,38 +34,32 @@ module.exports = function(app){
     
     app.route('/pins/create')
     .get(function(req,res,next){
-        res.render('pins/create');
+      res.render('pins/create');
     })
     .post(function(req,res,next){
-        var pin = new Pin();
-        pin.title=req.body.title;
-        pin.desc = req.body.desc;
-        pin.username = req.body.username;
-        pin.isSave = false;
+      console.log('post');
+      var pin = new Pin();
+      pin.title = req.body.title;
+      pin.desc = req.body.desc;
+      pin.username = req.body.username;
+      pin.isSave = false;
 
-        if(!req.files)
-            return JSON('error');
+      if(!req.files)
+        return json('error');
 
-        let sampleFile = req.files.sampleFile;
-        let fileName = Math.random().toString(26).slice(2)+".jpg";
-        let path = "./public/Files/"+fileName;
+      let sampleFile = req.files.sampleFile;
+      let fileName = Math.random().toString(26).slice(2) + '.jpg';
+      let path = './public/Files/' + fileName;
+      pin.path = '/Files/' + fileName;
 
-        pin.path = "/Files/"+fileName;
-
-        // Move the file from client machine to server
-        sampleFile.mv(path,function(err){
-            if(err){
-                return res.status(500).send(err);
-            }
-        });
-
-        //Save the pin to database
-        pin.save(function(err){
-            if(err){
-                throw err;
-            }
-            res.redirect('/pins/index');
-        });
+      sampleFile.mv(path, function(err){
+        if(err)
+          return res.status(500).send(err);
+      })
+      pin.save(function(err){
+          if(err) throw err;
+          res.redirect('/pins/index');
+        })
     })
 
     app.get('/pins/index',function(req,res,next){
@@ -77,7 +71,10 @@ module.exports = function(app){
     app.get('/pins/delete/:id',function(req,res,next){
         Pin.find({_id: req.params.id}).remove()
         .exec(function(err,foundPin){
-            res.redirect('/pins/index');
+            //res.redirect('/pins/index');
+            
+            //Implementing partial delete functionality
+            res.json(true);
         })
     })
 
