@@ -22,7 +22,7 @@
                 <%= pin.desc%>
             </p>
             <div class="btn-group pull-right">
-                <a class="btn btn-default" href="/pins/pin-save/<%= pin._id%>">
+                <a class="btn btn-default" href="/pins/pin-save/<%= pin._id%>" eval="save($this,data)">
                     <span class="fa <%= (pin.isSave)? 'fa-star': 'fa-star-o' %> fa-lg"></span>
                 </a>
                 <a ajax-target="element" class="btn btn-default" href="/pins/edit/<%= pin._id%>">
@@ -35,3 +35,13 @@
 
 <div id='partial' class="cls">
 </div>
+
+<script>
+    function save($this,data){
+        if(data){
+            $this.find('span').attr('class','fa fa-star');
+        }else {
+            $this.find('span').attr('class','fa fa-star-o');
+        }
+    }
+</script>

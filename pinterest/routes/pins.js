@@ -25,7 +25,9 @@ module.exports = function(app){
                 if(err){
                     return next(err);
                 }
-            res.redirect('/pins/details/'+foundPin._id);
+            //res.redirect('/pins/details/'+foundPin._id);
+            // Concept of partial updation of save-icon
+            res.json(foundPin.isSave);
             })
         })
     })
